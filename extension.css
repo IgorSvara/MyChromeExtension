@@ -1,0 +1,52 @@
+:root {
+    --background: #272626;
+    --highlight: #ff6a00;
+    /*--highlight: #30f694;*/
+}
+body {
+    background-color: var(--background);
+    margin:0;
+    padding: 10px;
+    font-family: "Gill Sans MT", serif;
+    width: 462px;
+    color: var(--highlight);
+    font-size: 20px;
+}
+
+input {
+    background-color: var(--background);
+    width: 100%;
+    padding: 10px ;
+    box-sizing: border-box;
+    border-color: var(--highlight);
+    border-width: 2px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--highlight);
+}
+button {
+    width: 150px;
+    font-family: "Gill Sans MT", serif;
+    background: var(--highlight);
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    margin: 5px 0;
+    border: 2px solid var(--highlight);
+ }
+#clr-local {
+    background-color: var(--background);
+    color: var(--highlight);
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-top: 5px;
+}
+
+li a {
+    color: var(--highlight);
+}
