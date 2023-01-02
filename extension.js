@@ -40,11 +40,11 @@ function generateSession() {
                 session = JSON.parse(session)
                 console.log(session)
 
-                window.open("https://google.com", "chromeWindow1", "popup")
-                window.open("https://fast.com", "chromeWindow2", "_blank")
-                // for (let i = 0; i < session.length; i++) {
-                //     window.open(session[i], "_blank")
-                // }
+                // window.open("https://google.com", "chromeWindow1", "popup")
+                // window.open("https://fast.com", "chromeWindow2", "_blank")
+                for (let i = 0; i < 2; i++) {
+                    window.open(session[i], "_blank")
+                }
             }
         })
 
