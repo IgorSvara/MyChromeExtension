@@ -2,6 +2,11 @@
   "manifest_version": 3,
   "version": "1.1",
   "name": "Leads Tracker",
+  "author": "Igor Svara",
+  "icons" : {
+    "128" : "ExtensionLogo.png"
+  },
+  "description": "Extension that allows you to store links. Has three functionalities, it can save a link from the built in input line, saves the current link and it can store the entire current session (can store only one session)",
   "action": {
     "default_popup": "extension.html",
     "default_icon": "ExtensionLogo.png"
