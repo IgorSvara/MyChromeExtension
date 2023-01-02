@@ -18,6 +18,11 @@ function restorePreviousLinks() {
 
 //generate the p session and inserts it in the unordered list
 function generateSession() {
+
+    function normalizeDate(date) {
+        return date.toString().length === 1 ? "0"+date : date;
+    }
+
     let session = localStorage.getItem("last_session")
     if (session) {
 
@@ -25,10 +30,9 @@ function generateSession() {
         anchorA.href = ""
 
         let currentDate = new Date()
-        anchorA.textContent = currentDate.getFullYear() + "/" + currentDate.getMonth()+1
-            + "/" + currentDate.getDate() + " | "
-            + currentDate.getHours() + ":" + currentDate.getMinutes()
-
+        anchorA.textContent = normalizeDate(currentDate.getDate()) + "/" + normalizeDate(currentDate.getMonth()+1)
+            + "/" +  normalizeDate(currentDate.getFullYear()) + " - "
+            + normalizeDate(currentDate.getHours()) + ":" + normalizeDate(currentDate.getMinutes())
         let anchorLi = document.createElement("li")
         anchorLi.append(anchorA)
         ulEl.append(anchorLi)
