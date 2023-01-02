@@ -7,11 +7,11 @@ restorePreviousLinks()
 
 function restorePreviousLinks() {
 
-    if(localStorage.getItem("links")) {
+    if (localStorage.getItem("links")) {
         links = JSON.parse(localStorage.getItem("links"))
         renderLinks()
     }
-    if(localStorage.getItem("last_session")) {
+    if (localStorage.getItem("last_session")) {
         generateSession()
     }
 }
@@ -19,43 +19,35 @@ function restorePreviousLinks() {
 //generate the p session and inserts it in the unordered list
 function generateSession() {
 
-    function normalizeDate(date) {
-        return date.toString().length === 1 ? "0"+date : date;
-    }
 
     let session = localStorage.getItem("last_session")
-    if (session) {
 
-        let anchorA = document.createElement("a")
-        anchorA.href = ""
+    let anchorA = document.createElement("a")
+    anchorA.href = ""
 
-        let currentDate = new Date()
-        anchorA.textContent = normalizeDate(currentDate.getDate()) + "/" + normalizeDate(currentDate.getMonth()+1)
-            + "/" +  normalizeDate(currentDate.getFullYear()) + " - "
-            + normalizeDate(currentDate.getHours()) + ":" + normalizeDate(currentDate.getMinutes())
-        let anchorLi = document.createElement("li")
-        anchorLi.append(anchorA)
-        ulEl.append(anchorLi)
+    anchorA.textContent = JSON.parse(session)[0]
+
+    let anchorLi = document.createElement("li")
+    anchorLi.append(anchorA)
+    ulEl.append(anchorLi)
 
 
-        anchorA.addEventListener("click", () => {
-            let session = localStorage.getItem("last_session")
-            if(session) {
-                session = JSON.parse(session)
+    anchorA.addEventListener("click", () => {
+        session = localStorage.getItem("last_session")
+        session = JSON.parse(session)
 
-                for (let i = 0; i < session.length; i++) {
-                    window.open(session[i], "_blank").focus()
-                }
-            }
-        })
+        // skip the first element because it's the time of save
+        for (let i = 1; i < session.length; i++) {
+            window.open(session[i], "_blank")
+        }
+    })
 
-    }
 }
 
 document.getElementById("input-btn").addEventListener("click", () => {
     let inputValue = inputEl.value
     if (inputValue) {
-        let link =  "https://" + inputValue
+        let link = "https://" + inputValue
         links.push(link)
 
         renderLinks()
@@ -69,7 +61,7 @@ document.getElementById("clr-local").addEventListener("click", () => {
 })
 
 document.getElementById("tab-btn").addEventListener("click", () => {
-    chrome.tabs.query({active:true, currentWindow:true}, (tabs) => {
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
         links.push(tabs[0].url)
         localStorage.setItem("links", JSON.stringify(links))
         renderLinks()
@@ -77,9 +69,21 @@ document.getElementById("tab-btn").addEventListener("click", () => {
 })
 
 document.getElementById("all-tabs-btn").addEventListener("click", () => {
-    chrome.tabs.query({currentWindow:true}, (tabs) => {
+
+    function normalizeDate(date) {
+        return date.toString().length === 1 ? "0" + date : date;
+    }
+
+    const currentDate = new Date()
+    const formattedDate = normalizeDate(currentDate.getDate()) + "/" + normalizeDate(currentDate.getMonth() + 1)
+        + "/" + normalizeDate(currentDate.getFullYear()) + " - "
+        + normalizeDate(currentDate.getHours()) + ":" + normalizeDate(currentDate.getMinutes())
+
+
+    chrome.tabs.query({currentWindow: true}, (tabs) => {
         let lastSession = []
-        for(let i = 0; i < tabs.length; i++) {
+        lastSession.push(formattedDate)
+        for (let i = 0; i < tabs.length; i++) {
             lastSession.push(tabs[i].url)
         }
         localStorage.setItem("last_session", JSON.stringify(lastSession))
